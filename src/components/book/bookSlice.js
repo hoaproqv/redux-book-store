@@ -57,7 +57,7 @@ export const getBooks =
       const response = await api.get(`/books${params}`);
       dispatch(bookSlice.actions.getBooksSuccess(response.data));
     } catch (error) {
-      dispatch(bookSlice.actions.hasError("Have an error"));
+      dispatch(bookSlice.actions.hasError(error.message));
     }
   };
 

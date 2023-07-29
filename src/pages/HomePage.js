@@ -23,6 +23,7 @@ const BACKEND_API = process.env.REACT_APP_BACKEND_API;
 
 const HomePage = () => {
   const { books, isLoading, error } = useSelector((state) => state);
+  const errorMessage = error;
   const [pageNum, setPageNum] = useState(1);
   const totalPage = 10;
 
@@ -38,11 +39,8 @@ const HomePage = () => {
     dispatch(getBooks({ page: pageNum }));
   }, [pageNum, dispatch]);
 
-  const defaultValues = {
-    searchQuery: "",
-  };
   const methods = useForm({
-    defaultValues,
+    searchQuery: "",
   });
   const { handleSubmit } = methods;
   const onSubmit = (data) => {
@@ -54,7 +52,7 @@ const HomePage = () => {
         <Typography variant="h3" sx={{ textAlign: "center" }}>
           Book Store
         </Typography>
-        {error && <Alert severity="danger">{error}</Alert>}
+        {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
         <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
           <Stack
             spacing={2}
