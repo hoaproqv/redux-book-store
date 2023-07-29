@@ -1,7 +1,7 @@
 import React from "react";
-import { InputAdornment } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
+import { Button, InputAdornment } from "@mui/material";
 import { FTextField } from "../form";
+import { Search } from "@mui/icons-material";
 
 const SearchForm = () => {
   return (
@@ -12,7 +12,9 @@ const SearchForm = () => {
       InputProps={{
         startAdornment: (
           <InputAdornment position="start">
-            <SearchIcon />
+            <Button type="submit" sx={{ padding: 0, minWidth: 30 }}>
+              <Search />
+            </Button>
           </InputAdornment>
         ),
       }}
