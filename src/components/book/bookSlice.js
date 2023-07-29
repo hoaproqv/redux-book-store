@@ -24,23 +24,28 @@ const bookSlice = createSlice({
     },
     getBooksSuccess(state, action) {
       state.isLoading = false;
+      state.error = null;
       state.books = action.payload;
     },
 
     addFavoriteSuccess(state, action) {
       state.isLoading = false;
+      state.error = null;
       state.readingList.push(action.payload);
     },
     getFavoriteListSuccess(state, action) {
       state.isLoading = false;
+      state.error = null;
       state.readingList = action.payload;
     },
     getBookDetailsSuccess(state, action) {
       state.isLoading = false;
+      state.error = null;
       state.bookDetail = action.payload;
     },
     removeBookFavoriteSuccess(state, action) {
       state.isLoading = false;
+      state.error = null;
     },
   },
 });
@@ -70,7 +75,8 @@ export const addFavorite =
       dispatch(bookSlice.actions.addFavoriteSuccess(response.data));
       toast.success("The book has been added to the reading list!");
     } catch (error) {
-      dispatch(bookSlice.actions.hasError("Have an error"));
+      dispatch(bookSlice.actions.hasError(error.message));
+      toast.error("This book is already available in the reading list!");
     }
   };
 
@@ -80,7 +86,7 @@ export const getFavoriteList = () => async (dispatch) => {
     const response = await api.get(`/favorites`);
     dispatch(bookSlice.actions.getFavoriteListSuccess(response.data));
   } catch (error) {
-    dispatch(bookSlice.actions.hasError("Have an error"));
+    dispatch(bookSlice.actions.hasError(error.message));
   }
 };
 
@@ -94,7 +100,7 @@ export const removeBookFavorite =
       dispatch(getFavoriteList());
       toast.success("The book has been removed");
     } catch (error) {
-      dispatch(bookSlice.actions.hasError("Have an error"));
+      dispatch(bookSlice.actions.hasError(error.message));
     }
   };
 
@@ -106,6 +112,6 @@ export const getBookDetails =
       const response = await api.get(`/books/${bookId}`);
       dispatch(bookSlice.actions.getBookDetailsSuccess(response.data));
     } catch (error) {
-      dispatch(bookSlice.actions.hasError("Have an error"));
+      dispatch(bookSlice.actions.hasError(error.message));
     }
   };

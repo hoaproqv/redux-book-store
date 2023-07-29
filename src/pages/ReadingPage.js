@@ -14,6 +14,7 @@ import { ClipLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  getBookDetails,
   getFavoriteList,
   removeBookFavorite,
 } from "../components/book/bookSlice";
@@ -26,6 +27,7 @@ const ReadingPage = () => {
   const navigate = useNavigate();
 
   const handleClickBook = (bookId) => {
+    dispatch(getBookDetails({ bookId }));
     navigate(`/books/${bookId}`);
   };
 
